@@ -1,4 +1,4 @@
-# Instalação n8n em Produção — Docker + PostgreSQL + Nginx (Debian 13)
+# Instalação n8n Laboratório — Docker + PostgreSQL + Nginx (Debian 13)
 
 # Deploy do n8n self-hosted via Docker, com PostgreSQL 17 como banco e Nginx como proxy reverso, em Debian 13 (Trixie). Setup em **HTTP puro** (sem TLS/SSL) — n8n e webhook expostos na porta 80.
 
