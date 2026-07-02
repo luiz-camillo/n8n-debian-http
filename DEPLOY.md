@@ -102,6 +102,7 @@ services:
       - "127.0.0.1:5678:5678"
     depends_on:
       - postgres
+      - runner
     environment:
       - TZ=America/Sao_Paulo
       - DB_TYPE=postgresdb
@@ -113,9 +114,29 @@ services:
       - N8N_PORT=5678
       - N8N_SECURE_COOKIE=false
       - NODE_ENV=production
-      - WEBHOOK_URL=http://SEU_IP_OU_DOMINIO/
+      - WEBHOOK_URL=http://138.186.172.235/
+
+      # Habilita execução externa de Python/JS via runners
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_RUNNERS_MODE=external
+      - N8N_RUNNERS_BROKER_LISTEN_ADDRESS=0.0.0.0
+      - N8N_RUNNERS_BROKER_PORT=5679
+      - N8N_RUNNERS_AUTH_TOKEN=senha_runner
+      - N8N_NATIVE_PYTHON_RUNNER=true
+
     volumes:
       - ./n8n_data:/home/node/.n8n
+
+  runner:
+    image: n8nio/runners:2.28.4
+    container_name: n8n_runner
+    restart: always
+    depends_on:
+      - n8n
+    environment:
+      - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
+      - N8N_RUNNERS_AUTH_TOKEN=senha_runner
+      - N8N_RUNNERS_PYTHON_ENABLE=true
 
 volumes:
   postgres_data:
